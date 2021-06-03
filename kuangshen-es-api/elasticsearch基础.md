@@ -195,3 +195,114 @@ ___
 
 5. sd
 
+6. es7命令操作
+
+   ~~~shell
+   #查询索引
+   GET dagl
+   
+   #删除索引
+   DELETE dagl
+   
+   #创建索引
+   PUT dagl
+   {
+     "mappings" : {
+       "properties" : {
+         "czlsh" : {
+           "type" : "keyword" //不会进行分词
+         },
+         "dxlx" : {
+           "type" : "text" //采用默认分词
+         },
+         "czsl" : {
+           "type" : "long"
+         },
+         "czsj" : {
+           "type" : "date"
+         } ,
+         "czsd" : {
+           "type" : "text",
+           "analyzer": "ik_smart"
+         },
+         "gksj" : {
+           "type" : "date"
+         },
+         "dxyb" : {
+           "type" : "text",
+           "analyzer": "ik_smart"
+         },
+         "cjsj" : {
+           "type" : "date"
+         },
+         "gwly" : {
+           "type" : "text",
+           "analyzer": "ik_smart"
+         }
+       }
+     },
+     "settings" : {
+       "index" : {
+         "number_of_shards" : 1,
+         "number_of_replicas" : 2
+       }
+     }
+   }
+   
+   # 添加数据
+   POST dagl/_doc/1
+   {
+     "czlsh" :"ssdsdd" ,
+     "dxlx" : "对象类型1",
+     "czsl" : 155,
+     "czsj" : "2020-05-06" ,
+     "czsd" : "处置手段1",
+     "gksj" : "2020-05-06",
+     "dxyb" : "独享样本1",
+     "cjsj" : "2020-05-06",
+     "gwly" : "岗位来源"
+       
+   }
+   
+   #已有索引添加字段
+   PUT dagl/_mapping/
+   {
+   		"properties":{
+   			"testadd":{
+   				"type":  "text",
+           		"analyzer": "ik_smart"
+   			}
+   		}
+   }
+   
+   #根据条件查询索引
+   POST dagl/_search
+   {
+     "query": { "match": { "dxlx": "对象类型" } },
+     "sort": [
+       {
+         "czsl": {
+           "order": "desc"
+         }
+       }
+     ]
+   }
+   
+   #查询索引总数
+   GET dagl/_count  
+   
+   #按条件查询索引总数
+   GET dagl/_count
+   {
+       "query": {
+           "match": {
+              "czsl": "1552"
+           }
+       }
+   }
+   ~~~
+
+   
+
+7. sd
+
